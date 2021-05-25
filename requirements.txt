@@ -7,5 +7,5 @@ requests
 Pillow
 gunicorn == 20.0.4
 torch==1.7.1+cpu
-torchaudio==0.7.0
+torchaudio==0.7.1
 torchvision==0.8.1+cpu
