@@ -273,11 +273,8 @@ def disease_prediction():
             return render_template('disease.html', title=title)
         try:
             img = file.read()
-            
-            links = storage.child('Images/4.jpg').get_url(None)
-            img1 = links.read()
-              
-            prediction = predict_image(img1)
+                                  
+            prediction = predict_image(img)
 
             prediction = Markup(str(disease_dic[prediction]))
             return render_template('disease-result.html', prediction=prediction, title=title)
