@@ -13,6 +13,30 @@ import torch
 from torchvision import transforms
 from PIL import Image
 from utils.model import ResNet9
+
+config = {
+    "apiKey": "AIzaSyB_k9SPujVHdm-8EHwuy9OQU1AEAhBA4Ro",
+    "authDomain": "irisscan-94a4e.firebaseapp.com",
+    "databaseURL": "https://irisscan-94a4e-default-rtdb.firebaseio.com",
+    "projectId": "irisscan-94a4e",
+    "storageBucket": "irisscan-94a4e.appspot.com",
+    "messagingSenderId": "157605262331",
+    "appId": "1:157605262331:web:9f18539654fca271a7515e",
+    "measurementId": "G-BW0H8V7E2D"
+}
+
+firebase = pyrebase.initialize_app(config)
+
+storage = firebase.storage()
+
+auth=firebase.auth()
+
+try:
+    login = auth.sign_in_with_email_and_password("yuvalabs@gmail.com", "shambo1234&")
+except:
+    print("hello")
+
+
 # ==============================================================================================
 
 # -------------------------LOADING THE TRAINED MODELS -----------------------------------------------
@@ -250,8 +274,9 @@ def disease_prediction():
             return render_template('disease.html', title=title)
         try:
             img = file.read()
+            links = storage.child('Images/4.jpg').get_url(None)
 
-            prediction = predict_image(img)
+            prediction = predict_image(links)
 
             prediction = Markup(str(disease_dic[prediction]))
             return render_template('disease-result.html', prediction=prediction, title=title)
