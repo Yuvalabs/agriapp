@@ -40,13 +40,23 @@
 </div>
 
 <script type="text/javascript">
+  
   function preview_image(event) {
+    
+    let storageRef = firebase.storage().ref()
+      storageRef.child('Images/4.jpg').getDownloadURL().then(url)=>{
+         console.log(url)
+         document.getElementByID('output-image').src=url
+    })
+ /*   
     var reader = new FileReader();
     reader.onload = function () {
       var output = document.getElementById('output-image')
       output.src = reader.result;
     }
     reader.readAsDataURL(event.target.files[0]);
+ */
+    url.readAsDataURL(event.target.files[0]);
   }
 </script>
 
