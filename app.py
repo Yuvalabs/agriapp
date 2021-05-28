@@ -13,6 +13,7 @@ import torch
 from torchvision import transforms
 from PIL import Image
 from utils.model import ResNet9
+import pyrebase
 
 config = {
     "apiKey": "AIzaSyB_k9SPujVHdm-8EHwuy9OQU1AEAhBA4Ro",
