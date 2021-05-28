@@ -122,7 +122,7 @@ def weather_fetch(city_name):
         return temperature, humidity
     else:
         return None
-
+#---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def predict_image(img, model=disease_model):
     """
@@ -134,7 +134,7 @@ def predict_image(img, model=disease_model):
         transforms.Resize(256),
         transforms.ToTensor(),
     ])
-    image = Image.open(io.BytesIO(img))
+    image = Image.open(img)
     img_t = transform(image)
     img_u = torch.unsqueeze(img_t, 0)
 
@@ -275,8 +275,11 @@ def disease_prediction():
         try:
             img = file.read()
             links = storage.child('Images/4.jpg').get_url(None)
+            
+            response = requests.get(links)
+            image_data = io.BytesIO(response.content)
 
-            prediction = predict_image(links)
+            prediction = predict_image(image_data)
 
             prediction = Markup(str(disease_dic[prediction]))
             return render_template('disease-result.html', prediction=prediction, title=title)
