@@ -197,29 +197,37 @@ def crop_prediction():
     title = 'Harvestify - Crop Recommendation'
 
     if request.method == 'POST':
-        N = int(request.form['nitrogen'])
-        P = int(request.form['phosphorous'])
-        K = int(request.form['pottasium'])
-        ph = float(request.form['ph'])
+        DN = str(request.form['nitrogen'])
+         
         rainfall = float(request.form['rainfall'])
+        
+        X1 = db.child("LandParameters/"+ DN + "/N").get().val()
+        N = int(X1)
+        X2 = db.child("LandParameters/"+ DN + "/P").get().val()
+        P = int(X2)
+        X3 = db.child("LandParameters/"+ DN + "/K").get().val()
+        K = int(X3)
+        X4 = db.child("LandParameters/"+ DN + "/ph").get().val()
+        ph = int(X4)
+        X5 = db.child("LandParameters/"+ DN + "/Temperature").get().val()
+        temperature = int(X5)
+        X6 = db.child("LandParameters/"+ DN + "/Humidity").get().val()
+        humidity = int(X6)
         
         
         #N = db.child("LandParameters/"+ DN + "/N").get().val()
 
         # state = request.form.get("stt")
-        city = request.form.get("city")
+       
 
-        if weather_fetch(city) != None:
-            temperature, humidity = weather_fetch(city)
-            data = np.array([[N, P, K, temperature, humidity, ph, rainfall]])
-            my_prediction = crop_recommendation_model.predict(data)
-            final_prediction = my_prediction[0]
+        
+        data = np.array([[N, P, K, temperature, humidity, ph, rainfall]])
+        my_prediction = crop_recommendation_model.predict(data)
+        final_prediction = my_prediction[0]
 
-            return render_template('crop-result.html', prediction=final_prediction, title=title)
-            #return final_prediction
-        else:
-
-            return render_template('try_again.html', title=title)
+        return render_template('crop-result.html', prediction=final_prediction, title=title)
+        #return final_prediction
+      
 
 # render fertilizer recommendation result page
 
