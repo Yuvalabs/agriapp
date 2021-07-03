@@ -227,13 +227,18 @@ def fert_recommend():
     title = 'Harvestify - Fertilizer Suggestion'
 
     crop_name = str(request.form['cropname'])
-    N = int(request.form['nitrogen'])
-    DN = str(request.form['phosphorous'])
+    DN = str(request.form['nitrogen'])
+    P = int(request.form['phosphorous'])
     K = int(request.form['pottasium'])
     # ph = float(request.form['ph'])
 
-    Xerox = db.child("LandParameters/"+ DN + "/P").get().val()
-    P = int(Xerox)
+    X1 = db.child("LandParameters/"+ DN + "/N").get().val()
+    N = int(X1)
+    X2 = db.child("LandParameters/"+ DN + "/P").get().val()
+    P = int(X2)
+    X3 = db.child("LandParameters/"+ DN + "/K").get().val()
+    K = int(X3)
+
     df = pd.read_csv('Data/fertilizer.csv')
 
     nr = df[df['Crop'] == crop_name]['N'].iloc[0]
