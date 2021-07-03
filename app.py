@@ -304,7 +304,7 @@ def disease_prediction():
         #try:                
         #except:
         #    pass
-    return render_template('disease.html', title=title)
+    #return render_template('disease.html', title=title)
 
 
 # ===============================================================================================
