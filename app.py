@@ -287,19 +287,20 @@ def fert_recommend():
 def disease_prediction():
     title = 'Harvestify - Disease Detection'   
     
-    if request.method == 'POST':
-        DN = str(request.form['nitrogen'])
-        Image_name = db.child("LeafImages/"+ DN ).get().val()
+    
+    DN = str(request.form['nitrogen'])
+    Image_name = db.child("LeafImages/"+ DN ).get().val()
         
-        links = storage.child("Images/" + DN + "/" + Image_name).get_url(None)
+    links = storage.child("Images/" + DN + "/" + Image_name).get_url(None)
             
-        response = requests.get(links)
-        image_data = io.BytesIO(response.content)
+    response = requests.get(links)
+    image_data = io.BytesIO(response.content)
 
-        prediction = predict_image(image_data)
+    prediction = predict_image(image_data)
 
-        prediction = Markup(str(disease_dic[prediction]))
-        return render_template('disease-result.html', prediction=prediction, title=title)
+    prediction = Markup(str(disease_dic[prediction]))
+    
+    return render_template('disease-result.html', prediction=prediction, title=title)
         
         #try:                
         #except:
