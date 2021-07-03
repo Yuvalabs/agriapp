@@ -28,6 +28,8 @@ firebase = pyrebase.initialize_app(config)
 
 storage = firebase.storage()
 
+db = firebase.database()
+
 auth=firebase.auth()
 
 try:
@@ -198,6 +200,9 @@ def crop_prediction():
         K = int(request.form['pottasium'])
         ph = float(request.form['ph'])
         rainfall = float(request.form['rainfall'])
+        
+        
+        #N = db.child("LandParameters/"+ DN + "/N").get().val()
 
         # state = request.form.get("stt")
         city = request.form.get("city")
