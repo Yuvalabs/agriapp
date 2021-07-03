@@ -228,8 +228,8 @@ def fert_recommend():
 
     crop_name = str(request.form['cropname'])
     DN = str(request.form['nitrogen'])
-    P = int(request.form['phosphorous'])
-    K = int(request.form['pottasium'])
+    #P = int(request.form['phosphorous'])
+    #K = int(request.form['pottasium'])
     # ph = float(request.form['ph'])
 
     X1 = db.child("LandParameters/"+ DN + "/N").get().val()
