@@ -275,19 +275,17 @@ def fert_recommend():
 # render disease prediction result page
 
 
-@app.route('/disease-predict', methods=['GET', 'POST'])
+@app.route('/disease-predict', methods=['POST'])
 def disease_prediction():
-    title = 'Harvestify - Disease Detection'
-
+    title = 'Harvestify - Disease Detection'   
+    
     if request.method == 'POST':
-        if 'file' not in request.files:
-            return redirect(request.url)
-        file = request.files.get('file')
-        if not file:
-            return render_template('disease.html', title=title)
+        DN = str(request.form['nitrogen'])
+        Image_name = db.child("LeafImages/"+ DN ).get().val()
+        
         try:
-            img = file.read()
-            links = storage.child('Images/4.jpg').get_url(None)
+            
+            links = storage.child("Images/" + DN "/" + Image_name).get_url(None)
             
             response = requests.get(links)
             image_data = io.BytesIO(response.content)
