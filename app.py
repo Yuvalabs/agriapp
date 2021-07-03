@@ -182,6 +182,12 @@ def fertilizer_recommendation():
 
 # render disease prediction input page
 
+@ app.route('/disease')
+def disease_upload():
+    title = 'Harvestify - Diesease Prediction'
+
+    return render_template('disease.html', title=title)
+
 
 
 
