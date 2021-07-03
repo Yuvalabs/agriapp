@@ -107,7 +107,7 @@ def weather_fetch(city_name):
     Fetch and returns the temperature and humidity of a city
     :params: city_name
     :return: temperature, humidity
-    """
+    
     api_key = config.weather_api_key
     base_url = "http://api.openweathermap.org/data/2.5/weather?"
 
@@ -123,6 +123,8 @@ def weather_fetch(city_name):
         return temperature, humidity
     else:
         return None
+    """
+    return 88, 300
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def predict_image(img, model=disease_model):
@@ -213,8 +215,8 @@ def crop_prediction():
             my_prediction = crop_recommendation_model.predict(data)
             final_prediction = my_prediction[0]
 
-            #return render_template('crop-result.html', prediction=final_prediction, title=title)
-            return final_prediction
+            return render_template('crop-result.html', prediction=final_prediction, title=title)
+            #return final_prediction
         else:
 
             return render_template('try_again.html', title=title)
