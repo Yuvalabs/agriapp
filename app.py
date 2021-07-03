@@ -16,27 +16,29 @@ from utils.model import ResNet9
 import pyrebase
 
 config = {
-    "apiKey": "AIzaSyB_k9SPujVHdm-8EHwuy9OQU1AEAhBA4Ro",
-    "authDomain": "irisscan-94a4e.firebaseapp.com",
-    "databaseURL": "https://irisscan-94a4e-default-rtdb.firebaseio.com",
-    "projectId": "irisscan-94a4e",
-    "storageBucket": "irisscan-94a4e.appspot.com",
-    "messagingSenderId": "157605262331",
-    "appId": "1:157605262331:web:9f18539654fca271a7515e",
-    "measurementId": "G-BW0H8V7E2D"
+     "apiKey": "AIzaSyB1407Jf6sosGEFnO-1h6rCKwWpzbW1REQ",
+     "authDomain": "farmgrid-67b05.firebaseapp.com",
+     "databaseURL": "https://farmgrid-67b05-default-rtdb.firebaseio.com/",
+     "projectId": "farmgrid-67b05",
+     "storageBucket": "farmgrid-67b05.appspot.com",
+     "messagingSenderId": "602553499578",
+     "appId": "1:602553499578:web:644ee05fa1be2fddb5e783",
+     "measurementId": "G-FF6T2X548B"
 }
 
 firebase = pyrebase.initialize_app(config)
 
 storage = firebase.storage()
 
-auth=firebase.auth()
+db = firebase.database()
 
+auth=firebase.auth()
 try:
-    login = auth.sign_in_with_email_and_password("yuvalabs@gmail.com", "shambo1234&")
+    login = auth.sign_in_with_email_and_password("irisscannerprjt@gmail.com", "shambo1234)")
 except:
     print("hello")
 
+DN = ""
 
 # ==============================================================================================
 
@@ -195,10 +197,19 @@ def crop_prediction():
     title = 'Harvestify - Crop Recommendation'
 
     if request.method == 'POST':
-        N = int(request.form['nitrogen'])
-        P = int(request.form['phosphorous'])
-        K = int(request.form['pottasium'])
-        ph = float(request.form['ph'])
+        DN = str(request.form['DeviceNo'])
+
+        all_users = db.child("LandParameters/"+ DN ).get().val()
+	for user in all_users.each():
+ 	  if ( user.key() == 'N' ):
+  	    N = user.val()
+	  if ( user.key() == 'P' ):
+ 	    P = user.val()
+	  if ( user.key() == 'K' ):
+ 	    K = user.val()
+	  if ( user.key() == 'pH' ):
+  	    ph = user.val()
+                       
         rainfall = float(request.form['rainfall'])
 
         # state = request.form.get("stt")
@@ -223,10 +234,21 @@ def crop_prediction():
 def fert_recommend():
     title = 'Harvestify - Fertilizer Suggestion'
 
+    DN = str(request.form['DeviceNo'])
+
     crop_name = str(request.form['cropname'])
-    N = int(request.form['nitrogen'])
-    P = int(request.form['phosphorous'])
-    K = int(request.form['pottasium'])
+    
+    all_users = db.child("LandParameters/"+ DN).get()
+    for user in all_users.each():
+      if ( user.key() == 'N' ):
+        N = user.val()
+      
+      if ( user.key() == 'P' ):
+        P = user.val()
+      
+      if ( user.key() == 'K' ):
+        K = user.val()      
+	  
     # ph = float(request.form['ph'])
 
     df = pd.read_csv('Data/fertilizer.csv')
@@ -263,19 +285,16 @@ def fert_recommend():
 # render disease prediction result page
 
 
-@app.route('/disease-predict', methods=['GET', 'POST'])
+@app.route('/disease-predict', methods=['GET','POST'])
 def disease_prediction():
     title = 'Harvestify - Disease Detection'
-
+           
     if request.method == 'POST':
-        if 'file' not in request.files:
-            return redirect(request.url)
-        file = request.files.get('file')
-        if not file:
-            return render_template('disease.html', title=title)
+        DN = str(request.form['DeviceNo'])
+        Image_name = db.child("LeafImages/"+ DN ).get().val()
         try:
             img = file.read()
-            links = storage.child('Images/4.jpg').get_url(None)
+            links = storage.child("Images/"+ DN + "/" + Image_name).get_url(None)
             
             response = requests.get(links)
             image_data = io.BytesIO(response.content)
