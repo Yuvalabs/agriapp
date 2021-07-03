@@ -291,19 +291,19 @@ def disease_prediction():
         DN = str(request.form['nitrogen'])
         Image_name = db.child("LeafImages/"+ DN ).get().val()
         
-        try:
+        links = storage.child("Images/" + DN + "/" + Image_name).get_url(None)
             
-            links = storage.child("Images/" + DN + "/" + Image_name).get_url(None)
-            
-            response = requests.get(links)
-            image_data = io.BytesIO(response.content)
+        response = requests.get(links)
+        image_data = io.BytesIO(response.content)
 
-            prediction = predict_image(image_data)
+        prediction = predict_image(image_data)
 
-            prediction = Markup(str(disease_dic[prediction]))
-            return render_template('disease-result.html', prediction=prediction, title=title)
-        except:
-            pass
+        prediction = Markup(str(disease_dic[prediction]))
+        return render_template('disease-result.html', prediction=prediction, title=title)
+        
+        #try:                
+        #except:
+        #    pass
     return render_template('disease.html', title=title)
 
 
