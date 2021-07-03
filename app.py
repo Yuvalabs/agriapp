@@ -232,7 +232,8 @@ def fert_recommend():
     K = int(request.form['pottasium'])
     # ph = float(request.form['ph'])
 
-    P = db.child("LandParameters/"+ DN + "/P").get().val()
+    Xerox = db.child("LandParameters/"+ DN + "/P").get().val()
+    P = int(Xerox)
     df = pd.read_csv('Data/fertilizer.csv')
 
     nr = df[df['Crop'] == crop_name]['N'].iloc[0]
