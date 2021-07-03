@@ -293,7 +293,7 @@ def disease_prediction():
         
         try:
             
-            links = storage.child("Images/" + DN "/" + Image_name).get_url(None)
+            links = storage.child("Images/" + DN + "/" + Image_name).get_url(None)
             
             response = requests.get(links)
             image_data = io.BytesIO(response.content)
