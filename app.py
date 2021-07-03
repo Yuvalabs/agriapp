@@ -228,7 +228,7 @@ def fert_recommend():
 
     crop_name = str(request.form['cropname'])
     N = int(request.form['nitrogen'])
-    DN = int(request.form['phosphorous'])
+    DN = str(request.form['phosphorous'])
     K = int(request.form['pottasium'])
     # ph = float(request.form['ph'])
 
