@@ -13,6 +13,21 @@ from PIL import Image
 from utils.model import ResNet9
 import pyrebase
 
+
+config = {
+  "apiKey": "AIzaSyB1407Jf6sosGEFnO-1h6rCKwWpzbW1REQ",
+  "authDomain": "farmgrid-67b05.firebaseapp.com",
+  "databaseURL": "https://farmgrid-67b05-default-rtdb.firebaseio.com",
+  "projectId": "farmgrid-67b05",
+  "storageBucket": "farmgrid-67b05.appspot.com",
+  "messagingSenderId": "602553499578",
+  "appId": "1:602553499578:web:644ee05fa1be2fddb5e783",
+  "measurementId": "G-FF6T2X548B"
+}
+
+
+"""
+
 config = {
     "apiKey": "AIzaSyB_k9SPujVHdm-8EHwuy9OQU1AEAhBA4Ro",
     "authDomain": "irisscan-94a4e.firebaseapp.com",
@@ -23,7 +38,7 @@ config = {
     "appId": "1:157605262331:web:9f18539654fca271a7515e",
     "measurementId": "G-BW0H8V7E2D"
 }
-
+"""
 firebase = pyrebase.initialize_app(config)
 
 storage = firebase.storage()
@@ -33,7 +48,7 @@ db = firebase.database()
 auth=firebase.auth()
 
 try:
-    login = auth.sign_in_with_email_and_password("yuvalabs@gmail.com", "shambo1234&")
+    login = auth.sign_in_with_email_and_password("farmgrid2021@gmail.com", "shambo1234%")
 except:
     print("hello")
 
