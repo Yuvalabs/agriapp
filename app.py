@@ -96,35 +96,6 @@ crop_recommendation_model_path = 'models/RandomForest.pkl'
 crop_recommendation_model = pickle.load(
     open(crop_recommendation_model_path, 'rb'))
 
-
-# =========================================================================================
-
-# Custom functions for calculations
-
-
-def weather_fetch(city_name):
-    """
-    Fetch and returns the temperature and humidity of a city
-    :params: city_name
-    :return: temperature, humidity
-    
-    api_key = config.weather_api_key
-    base_url = "http://api.openweathermap.org/data/2.5/weather?"
-
-    complete_url = base_url + "appid=" + api_key + "&q=" + city_name
-    response = requests.get(complete_url)
-    x = response.json()
-
-    if x["cod"] != "404":
-        y = x["main"]
-
-        temperature = round((y["temp"] - 273.15), 2)
-        humidity = y["humidity"]
-        return temperature, humidity
-    else:
-        return None
-    """
-    return 88, 300
 #---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def predict_image(img, model=disease_model):
@@ -160,7 +131,7 @@ app = Flask(__name__)
 
 @ app.route('/')
 def home():
-    title = 'Harvestify - Home'
+    title = 'FarmGrid - Home'
     return render_template('index.html', title=title)
 
 # render crop recommendation form page
@@ -168,7 +139,7 @@ def home():
 
 @ app.route('/crop-recommend')
 def crop_recommend():
-    title = 'Harvestify - Crop Recommendation'
+    title = 'FarmGrid - Crop Recommendation'
     return render_template('crop.html', title=title)
 
 # render fertilizer recommendation form page
@@ -176,7 +147,7 @@ def crop_recommend():
 
 @ app.route('/fertilizer')
 def fertilizer_recommendation():
-    title = 'Harvestify - Fertilizer Suggestion'
+    title = 'FarmGrid - Fertilizer Suggestion'
 
     return render_template('fertilizer.html', title=title)
 
@@ -184,7 +155,7 @@ def fertilizer_recommendation():
 
 @ app.route('/disease')
 def disease_upload():
-    title = 'Harvestify - Diesease Prediction'
+    title = 'FarmGrid - Diesease Prediction'
 
     return render_template('disease.html', title=title)
 
@@ -200,7 +171,7 @@ def disease_upload():
 
 @ app.route('/crop-predict', methods=['POST'])
 def crop_prediction():
-    title = 'Harvestify - Crop Recommendation'
+    title = 'FarmGrid - Crop Recommendation'
 
     #if request.method == 'POST':
     DN = str(request.form['nitrogen'])
@@ -240,7 +211,7 @@ def crop_prediction():
 
 @ app.route('/fertilizer-predict', methods=['POST'])
 def fert_recommend():
-    title = 'Harvestify - Fertilizer Suggestion'
+    title = 'FarmGrid - Fertilizer Suggestion'
 
     crop_name = str(request.form['cropname'])
     DN = str(request.form['nitrogen'])
@@ -291,7 +262,7 @@ def fert_recommend():
 
 @app.route('/disease-predict', methods=['POST'])
 def disease_prediction():
-    title = 'Harvestify - Disease Detection'   
+    title = 'FarmGrid - Disease Detection'   
     
     
     DN = str(request.form['nitrogen'])
